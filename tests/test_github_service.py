@@ -2,38 +2,40 @@ import unittest
 from unittest.mock import patch
 from services.github import GitHubService
 
-class TestGithubService(unittest.TestCase):
 
+class TestGithubService(unittest.TestCase):
     def setUp(self):
         self.mock_trending_repos = {
             "total_count": 2,
             "incomplete_results": False,
-            "items": [{
-                "id": 1,
-                "language": "JavaScript",
-                "html_url": "https://github.com/testuser/testrepo",
-                "description":"Test Javascript Repo"
+            "items": [
+                {
+                    "id": 1,
+                    "language": "JavaScript",
+                    "html_url": "https://github.com/testuser/testrepo",
+                    "description": "Test Javascript Repo",
                 },
                 {
-                "id": 2,
-                "language": "Python",
-                "html_url": "https://github.com/testuser2/testrepo2",
-                "description":"Test Python Repo"
+                    "id": 2,
+                    "language": "Python",
+                    "html_url": "https://github.com/testuser2/testrepo2",
+                    "description": "Test Python Repo",
                 },
                 {
-                "id": 3,
-                "language": None,
-                "html_url": "https://github.com/testuser3/testrepo3",
-                "description":"Test Undefined language Repo"
-                },                
-            ]
+                    "id": 3,
+                    "language": None,
+                    "html_url": "https://github.com/testuser3/testrepo3",
+                    "description": "Test Undefined language Repo",
+                },
+            ],
         }
-        
+
         self.mock_trending_repos_empty_response = {
             "total_count": 0,
             "incomplete_results": False,
-            "items": []
+            "items": [],
         }
+
     @patch("services.github.GitHubService._fetch_trending_repos")
     def test_get_trending_repos_ok(self, fetch_mock):
 
@@ -44,36 +46,36 @@ class TestGithubService(unittest.TestCase):
         r = GitHubService.get_trending_repos(date)
 
         expected_response = {
-            'JavaScript': {
-                'count': 1, 
-                'repos': [
+            "JavaScript": {
+                "count": 1,
+                "repos": [
                     {
-                        'url': 'https://github.com/testuser/testrepo', 
-                        'description': 'Test Javascript Repo'
+                        "url": "https://github.com/testuser/testrepo",
+                        "description": "Test Javascript Repo",
                     }
-                ]
-            }, 
-            'Python': {
-                'count': 1, 
-                'repos': [
+                ],
+            },
+            "Python": {
+                "count": 1,
+                "repos": [
                     {
-                        'url': 'https://github.com/testuser2/testrepo2', 
-                        'description': 'Test Python Repo'
+                        "url": "https://github.com/testuser2/testrepo2",
+                        "description": "Test Python Repo",
                     }
-                ]
-            }, 
-            'undefined': {
-                'count': 1, 
-                'repos': [
+                ],
+            },
+            "undefined": {
+                "count": 1,
+                "repos": [
                     {
-                        'url': 'https://github.com/testuser3/testrepo3', 
-                        'description': 'Test Undefined language Repo'
+                        "url": "https://github.com/testuser3/testrepo3",
+                        "description": "Test Undefined language Repo",
                     }
-                ]
-            }
+                ],
+            },
         }
 
-        self.assertTrue(r==expected_response)
+        self.assertTrue(r == expected_response)
         fetch_mock.assert_called_once()
 
     @patch("services.github.GitHubService._fetch_trending_repos")
@@ -85,6 +87,4 @@ class TestGithubService(unittest.TestCase):
 
         r = GitHubService.get_trending_repos(date)
 
-        self.assertTrue(r=={})
-
-    
+        self.assertTrue(r == {})

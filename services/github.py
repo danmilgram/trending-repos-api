@@ -4,14 +4,12 @@ import requests
 github_api_url = os.environ.get("GITHUB_API_URL")
 github_search_url = os.environ.get("GITHUB_SEARCH_REPO_URL")
 
-class GitHubService():
 
+class GitHubService:
     @classmethod
-    def _fetch_trending_repos(cls,date):
+    def _fetch_trending_repos(cls, date):
         url = "{gh}{s}?q=created:>{d}&sort=stars&order=desc&per_page=100".format(
-            gh = github_api_url,
-            s = github_search_url,
-            d = date 
+            gh=github_api_url, s=github_search_url, d=date
         )
 
         return requests.get(url).json()
@@ -31,22 +29,9 @@ class GitHubService():
                 lang = "undefined"
 
             if items.get(lang) is None:
-                items[lang] = {
-                    "count": 0 ,
-                    "repos":[]
-                }
+                items[lang] = {"count": 0, "repos": []}
 
-            items[lang]["repos"].append({
-                "url": url,
-                "description": desc
-            })
+            items[lang]["repos"].append({"url": url, "description": desc})
             items[lang]["count"] += 1
 
         return items
-
-
-
-
-
-
-        
