@@ -25,7 +25,7 @@ class TestGithubService(unittest.TestCase):
                     "id": 3,
                     "language": None,
                     "html_url": "https://github.com/testuser3/testrepo3",
-                    "description": "Test Undefined language Repo",
+                    "description": "Test Undefined Repo",
                 },
             ],
         }
@@ -46,34 +46,41 @@ class TestGithubService(unittest.TestCase):
         r = GitHubService.get_trending_repos(date)
 
         expected_response = {
-            "JavaScript": {
-                "count": 1,
-                "repos": [
-                    {
-                        "url": "https://github.com/testuser/testrepo",
-                        "description": "Test Javascript Repo",
-                    }
-                ],
-            },
-            "Python": {
-                "count": 1,
-                "repos": [
-                    {
-                        "url": "https://github.com/testuser2/testrepo2",
-                        "description": "Test Python Repo",
-                    }
-                ],
-            },
-            "undefined": {
-                "count": 1,
-                "repos": [
-                    {
-                        "url": "https://github.com/testuser3/testrepo3",
-                        "description": "Test Undefined language Repo",
-                    }
-                ],
-            },
+            "data": [
+                {
+                    "language": "JavaScript",
+                    "count": 1,
+                    "repos": [
+                        {
+                            "url": "https://github.com/testuser/testrepo",
+                            "description": "Test Javascript Repo",
+                        }
+                    ],
+                },
+                {
+                    "language": "Python",
+                    "count": 1,
+                    "repos": [
+                        {
+                            "url": "https://github.com/testuser2/testrepo2",
+                            "description": "Test Python Repo",
+                        }
+                    ],
+                },
+                {
+                    "language": "undefined",
+                    "count": 1,
+                    "repos": [
+                        {
+                            "url": "https://github.com/testuser3/testrepo3",
+                            "description": "Test Undefined Repo",
+                        }
+                    ],
+                },
+            ]
         }
+
+        print(r)
 
         self.assertTrue(r == expected_response)
         fetch_mock.assert_called_once()
@@ -87,4 +94,4 @@ class TestGithubService(unittest.TestCase):
 
         r = GitHubService.get_trending_repos(date)
 
-        self.assertTrue(r == {})
+        self.assertTrue(r == {"data": []})

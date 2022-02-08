@@ -18,9 +18,8 @@ class GitHubService:
     def get_trending_repos(cls, date):
         response = cls._fetch_trending_repos(date)
 
-        items = {}
+        items = []
         for r in response["items"]:
-
             lang = r["language"]
             url = r["html_url"]
             desc = r["description"]
@@ -28,10 +27,20 @@ class GitHubService:
             if not lang:
                 lang = "undefined"
 
-            if items.get(lang) is None:
-                items[lang] = {"count": 0, "repos": []}
+            found_lang = False
+            for x in items:
+                if x.get("language") == lang:
+                    x["repos"].append({"url": url, "description": desc})
+                    x["count"] += 1
+                    found_lang = True
 
-            items[lang]["repos"].append({"url": url, "description": desc})
-            items[lang]["count"] += 1
+            if not found_lang:
+                items.append(
+                    {
+                        "language": lang,
+                        "count": 1,
+                        "repos": [{"url": url, "description": desc}],
+                    }
+                )
 
-        return items
+        return {"data": items}
