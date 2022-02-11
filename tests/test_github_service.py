@@ -52,6 +52,7 @@ class TestGithubService(unittest.TestCase):
                     "count": 1,
                     "repos": [
                         {
+                            "id":1,
                             "url": "https://github.com/testuser/testrepo",
                             "description": "Test Javascript Repo",
                         }
@@ -62,6 +63,7 @@ class TestGithubService(unittest.TestCase):
                     "count": 1,
                     "repos": [
                         {
+                            "id":2,
                             "url": "https://github.com/testuser2/testrepo2",
                             "description": "Test Python Repo",
                         }
@@ -72,6 +74,7 @@ class TestGithubService(unittest.TestCase):
                     "count": 1,
                     "repos": [
                         {
+                            "id":3,
                             "url": "https://github.com/testuser3/testrepo3",
                             "description": "Test Undefined Repo",
                         }

@@ -20,6 +20,7 @@ class GitHubService:
 
         items = []
         for r in response["items"]:
+            id = r["id"]
             lang = r["language"]
             url = r["html_url"]
             desc = r["description"]
@@ -30,7 +31,11 @@ class GitHubService:
             found_lang = False
             for x in items:
                 if x.get("language") == lang:
-                    x["repos"].append({"url": url, "description": desc})
+                    x["repos"].append({
+                        "url": url, 
+                        "description": desc,
+                        "id":id
+                    })
                     x["count"] += 1
                     found_lang = True
 
@@ -39,7 +44,11 @@ class GitHubService:
                     {
                         "language": lang,
                         "count": 1,
-                        "repos": [{"url": url, "description": desc}],
+                        "repos": [{
+                            "url": url, 
+                            "description": desc,
+                            "id":id
+                        }],
                     }
                 )
 
